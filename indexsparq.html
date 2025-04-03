@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPARQ | Energías Renovables</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #0F9D58;
+            --secondary-green: #1DB954;
+            --dark-green: #0B5D34;
+            --accent-light: #F1F8E9;
+            --dark-gray: #212121;
+            --medium-gray: #757575;
+            --light-gray: #FAFAFA;
+            --white: #FFFFFF;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--light-gray);
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header & Navegación */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            padding: 0.5rem 0;
+            background-color: rgba(255, 255, 255, 0.98);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 42px;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            margin-left: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-item a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-item a:hover {
+            color: var(--primary-green);
+        }
+
+        .nav-item a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-green);
+            transition: var(--transition);
+        }
+
+        .nav-item a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger-line {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--dark-gray);
+            transition: var(--transition);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('media/hero-pattern.svg');
+            background-size: cover;
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary-green);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary-green);
+        }
+
+        /* Secciones */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Proyecto Section */
+        .proyecto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .proyecto-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .proyecto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .proyecto-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .proyecto-content {
+            padding: 1.5rem;
+        }
+
+        .proyecto-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        .proyecto-card p {
+            color: var(--medium-gray);
+            margin-bottom: 1rem;
+        }
+
+        /* Tecnologías Section */
+        .tecnologias {
+            background-color: var(--accent-light);
+        }
+
+        .tech-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .tech-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .tech-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background-color: var(--accent-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tech-icon img {
+            max-width: 50px;
+            max-height: 50px;
+        }
+
+        .tech-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .tech-card p {
+            color: var(--medium-gray);
+        }
+
+        /* Equipo Section */
+        .equipo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .miembro-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .miembro-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .miembro-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .miembro-info {
+            padding: 1.5rem;
+        }
+
+        .miembro-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .miembro-card p {
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Contacto Section */
+        .contacto {
+            background-color: var(--white);
+        }
+
+        .contacto-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contacto-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-gray);
+        }
+
+        .contacto-info p {
+            color: var(--medium-gray);
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .contacto-form {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(15, 157, 88, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--dark-green);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-green);
+        }
+
+        .footer-nav {
+            list-style: none;
+        }
+
+        .footer-nav li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-nav a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-nav a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-green);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Animaciones para elementos al hacer scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                height: 100vh;
+                z-index: 1000;
+                padding-top: 5rem;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--shadow);
+                gap: 1.5rem;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                margin: 1rem 0;
+            }
+
+            .nav-item a {
+                font-size: 1.3rem;
+            }
+
+            .nav-item a::after {
+                display: none;
+            }
+
+            /* Animación para menú hamburguesa */
+            .hamburger.active .hamburger-line:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .hamburger-line:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .hamburger-line:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 1rem 0;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navegación -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav-container">
+                <div class="logo">
+                    <img src="media/logo-sparq.png" alt="SPARQ Logo">
+                    <span class="logo-text">SPARQ</span>
+                </div>
+                <div class="hamburger">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a href="#proyecto">Proyecto</a></li>
+                    <li class="nav-item"><a href="#tecnologias">Tecnologías</a></li>
+                    <li class="nav-item"><a href="#equipo">Equipo</a></li>
+                    <li class="nav-item"><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Revolucionando el Futuro con Energías Renovables</h1>
+                <p>Exploramos tecnologías innovadoras para un mañana más sostenible a través de energía hidroeléctrica, piezoeléctrica y solar.</p>
+                <div class="hero-buttons">
+                    <a href="#proyecto" class="btn">Conoce el Proyecto</a>
+                    <a href="#equipo" class="btn btn-outline">Nuestro Equipo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyecto Section -->
+    <section id="proyecto" class="section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Nuestro Proyecto</h2>
+                <p class="section-subtitle">Exploramos fuentes de energía renovable convencionales y no convencionales, demostrando su potencial mediante modelos innovadores que explican su funcionamiento e integración en soluciones modernas.</p>
+            </div>
+            <div class="proyecto-grid">
+                <div class="proyecto-card fade-in">
+                    <img src="media/objetivo-proyecto.jpg" alt="Objetivos del Proyecto" class="proyecto-img">
+                    <div class="proyecto-content">
+                        <h3>Objetivos</h3>
+                        <p>Demostrar el funcionamiento y aplicaciones de energías renovables a través de modelos interactivos y educativos, mostrando su potencial para un futuro más verde.</p>
+                    </div>
+                </div>
+                <div class="proyecto-card fade-in">
+                    <img src="media/metodologia-proyecto.jpg" alt="Metodología" class="proyecto-img">
+                    <div class="proyecto-content">
+                        <h3>Metodología</h3>
+                        <p>Desarrollo iterativo con pruebas controladas y medición precisa de la eficiencia energética en diferentes escenarios y condiciones.</p>
+                    </div>
+                </div>
+                <div class="proyecto-card fade-in">
+                    <img src="media/materiales-proyecto.jpg" alt="Materiales" class="proyecto-img">
+                    <div class="proyecto-content">
+                        <h3>Materiales</h3>
+                        <p>Utilizamos materiales reutilizados como plástico, acrílico, arcilla para modelado, componentes electrónicos especializados y sistemas de medición de precisión.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologías Section -->
+    <section id="tecnologias" class="section tecnologias">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Tecnologías Investigadas</h2>
+                <p class="section-subtitle">Exploramos tres tecnologías principales con alto potencial para diversificar la matriz energética mundial y reducir nuestra dependencia de combustibles fósiles.</p>
+            </div>
+            <div class="tech-container">
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <img src="media/icon-hydro.png" alt="Hidroeléctrica">
+                    </div>
+                    <h3>Energía Hidroeléctrica</h3>
+                    <p>La energía hidroeléctrica se genera a través del movimiento del agua, que impulsa turbinas en generadores. Con avances en tecnología de microturbinas, ahora es factible utilizar flujos de agua de bajo caudal para la generación de energía tanto en entornos urbanos como rurales.</p>
+                </div>
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <img src="media/icon-piezo.png" alt="Piezoeléctrica">
+                    </div>
+                    <h3>Energía Piezoeléctrica</h3>
+                    <p>La piezoelectricidad es el fenómeno por el cual materiales como el cuarzo y las cerámicas producen una carga eléctrica en respuesta al estrés mecánico. Puede utilizarse para producir electricidad en áreas de alto tráfico, como aceras o estaciones de tren.</p>
+                </div>
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <img src="media/icon-solar.png" alt="Solar">
+                    </div>
+                    <h3>Energía Solar</h3>
+                    <p>La energía solar emplea células fotovoltaicas (PV) para convertir la luz solar directamente en electricidad. Nuevas tecnologías como paneles solares bifaciales, células solares de perovskita y paneles solares transparentes están transformando la industria solar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipo Section -->
+    <section id="equipo" class="section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Nuestro Equipo</h2>
+                <p class="section-subtitle">Un grupo dedicado de estudiantes y profesores comprometidos con la innovación y el futuro sostenible.</p>
+            </div>
+            <div class="equipo-grid">
+                <div class="miembro-card fade-in">
+                    <img src="media/miembro1.jpeg" alt="Santiago Delgado" class="miembro-img">
+                    <div class="miembro-info">
+                        <h3>Santiago Delgado</h3>
+                        <p>Líder en desarrollo de proyecto</p>
+                    </div>
+                </div>
+                <div class="miembro-card fade-in">
+                    <img src="media/miembro2.jpg" alt="José Matías Zermeño" class="miembro-img">
+                    <div class="miembro-info">
+                        <h3>José Matías Zermeño</h3>
+                        <p>Estudiante</p>
+                    </div>
+                </div>
+                <div class="miembro-card fade-in">
+                    <img src="media/miembro3.jpg" alt="Elena Carolina Segoviano" class="miembro-img">
+                    <div class="miembro-info">
+                        <h3>Elena Carolina Segoviano</h3>
+                        <p>Estudiante</p>
+                    </div>
+                </div>
+                <div class="miembro-card fade-in">
+                    <img src="media/miembro4.jpg" alt="José Manuel Delabra" class="miembro-img">
+                    <div class="miembro-info">
+                        <h3>José Manuel Delabra</h3>
+                        <p>Estudiante</p>
+                    </div>
+                </div>
+                <div class="miembro-card fade-in">
+                    <img src="media/miembro5.jpg" alt="Alexia Romina Andrade" class="miembro-img">
+                    <div class="miembro-info">
+                        <h3>Alexia Romina Andrade</h3>
+                        <p>Estudiante</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="section contacto">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Contáctanos</h2>
+                <p class="section-subtitle">¿Interesado en nuestro proyecto? ¡Nos encantaría escuchar de ti!</p>
+            </div>
+            <div class="contacto-container">
+                <div class="contacto-info fade-in">
+                    <h3>¿Tienes preguntas?</h3>
+                    <p>Si estás interesado en colaborar, conocer más detalles sobre nuestro proyecto o simplemente tienes curiosidad, no dudes en ponerte en contacto con nosotros.</p>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <img src="media/icon-email.jpg" alt="Email">
+                        </div>
+                        <p>proyecto@institutolomas.edu.mx</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <img src="media/icon-location.png" alt="Ubicación">
+                        </div>
+                        <p>Instituto Lomas de León, Guanajuato, México</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <img src="media/icon-phone.png" alt="Teléfono">
+                        </div>
+                        <p>+52 (477) 123-4567</p>
+                    </div>
+                </div>
+                <div class="contacto-form fade-in">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Asunto">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Tu mensaje" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <img src="media/logo-white.png" alt="SPARQ Logo" style="height: 40px;">
+                        <span class="logo-text" style="color: white;">SPARQ</span>
+                    </div>
+                    <p style="margin-top: 1rem; color: #aaa;">Innovación sustentable a través de la tecnología para un futuro más verde.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Enlaces</h3>
+                    <ul class="footer-nav">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#proyecto">Proyecto</a></li>
+                        <li><a href="#tecnologias">Tecnologías</a></li>
+                        <li><a href="#equipo">Equipo</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Redes Sociales</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <img src="media/icon-facebook.png" alt="Facebook" width="20">
+                        </a>
+                        <a href="#" class="social-link">
+                    
+                            <img src="media/icon-twitter.jpg" alt="Twitter" width="20">
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="media/icon-insta2.jpg" alt="Instagram" width="20">
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="media/icon-linkedin.webp" alt="LinkedIn" width="20">
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Información</h3>
+                    <p style="color: #aaa;">Este proyecto fue desarrollado por estudiantes del Instituto Lomas de León A.C. como parte de la Feria de Ciencias 2025.</p>
+                    <p style="color: #aaa; margin-top: 1rem;">© SPARQ 2025. Todos los derechos reservados.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Diseñado con ♥ para un futuro más sostenible</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Menú hamburguesa
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Cerrar el menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Animación de scroll para el header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Animación de aparición al hacer scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOptions = {
+            threshold: 0.3,
+            rootMargin: "0px 0px -100px 0px"
+        };
+        
+        const fadeInObserver = new IntersectionObserver(function(entries, fadeInObserver) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('active');
+                    fadeInObserver.unobserve(entry.target);
+                }
+            });
+        }, fadeInOptions);
+        
+        fadeElements.forEach(element => {
+            fadeInObserver.observe(element);
+        });
+        
+        // Animación suave al hacer clic en los enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
